@@ -6,8 +6,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import com.heltonbustos.ejemplotoolbarkotlin01.fragmentos.FragmentoCorreo
+import com.heltonbustos.ejemplotoolbarkotlin01.fragmentos.FragmentoNotificacion
 
 class MainActivity : AppCompatActivity() {
+
+    val f1:FragmentoCorreo = FragmentoCorreo()
+    val f2:FragmentoNotificacion = FragmentoNotificacion()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -16,6 +23,15 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        cargarFragmento(f1)
+    }
+
+    fun cargarFragmento(f:Fragment){
+        val fm = supportFragmentManager
+        val ft = fm.beginTransaction()
+        ft.replace(R.id.myFrame, f)
+        ft.commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -26,9 +42,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.itCorreo -> {
-                Toast.makeText(applicationContext, "Click en Correo", Toast.LENGTH_SHORT).show()
+                cargarFragmento(f1)
             }
-            R.id.itNotificacion -> Toast.makeText(applicationContext, "Click en Notificación", Toast.LENGTH_SHORT).show()
+            R.id.itNotificacion -> {
+                cargarFragmento(f2)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
